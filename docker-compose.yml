@@ -1,0 +1,21 @@
+services:
+  frontend:
+    build: ./frontend
+    ports: ["4200:4200"]
+
+  backend:
+    build: ./backend
+    ports: ["8000:8000"]
+
+  rasa:
+    image: rasa/rasa:3.1.2
+    volumes:
+      - ./assistants:/app
+    command: run -m /app --enable-api --cors "*"
+    ports: ["5005:5005"]
+
+  tts:
+    image: coqui-ai/tts
+    volumes:
+      - ./tts:/data
+    ports: ["5002:5002"]
