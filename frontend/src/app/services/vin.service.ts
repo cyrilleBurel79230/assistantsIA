@@ -18,6 +18,9 @@ export class VinService {
     return this.http.get<Vin[]>(`${this.base}${ServerConfigValue.endpoints.getCave}`);
   }
 
+  modifierVin(nom: string, vin: Vin): Observable<Vin> {
+    return this.http.put<Vin>(`${this.base}${ServerConfigValue.endpoints.updateVin}/${encodeURIComponent(nom)}`, vin);
+  }
   ajouterVin(vin: Vin): Observable<any> {
     return this.http.post(`${this.base}${ServerConfigValue.endpoints.addVin}`, vin);
   }

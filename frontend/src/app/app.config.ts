@@ -22,7 +22,7 @@ export interface AppConfig {
 
 // Ton objet de config
 export const APP_CONFIG_VALUE: AppConfig = {
-  apiBaseUrl: 'http://localhost:8000',
+  apiBaseUrl: 'http://127.0.0.1:8000/api',
   assistants: {
     caveavin:   { enabled: true,  route: 'caveavin',   label: 'Cave à vin' },
     bourse:     { enabled: false, route: 'bourse',     label: 'Bourse' },

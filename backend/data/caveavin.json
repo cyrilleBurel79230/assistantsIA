@@ -1,0 +1,20 @@
+[
+  {
+    "nom": "Château Margaux",
+    "annee": 2015,
+    "type": "Rouge",
+    "quantite": 6
+  },
+  {
+    "nom": "Chateau Margaux",
+    "annee": 2025,
+    "type": "Rouge",
+    "quantite": 1
+  },
+  {
+    "nom": "Chateau montaigne",
+    "annee": 2025,
+    "type": "Rouge",
+    "quantite": 1
+  }
+]

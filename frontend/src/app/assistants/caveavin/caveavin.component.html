@@ -10,10 +10,34 @@
   <option value="Rosé">Rosé</option>
 </select>
 
-<ul *ngIf="cave.length > 0" class="liste-vins">
-  <div *ngFor="let vin of cave | vinType: filtreType">
-  {{ vin.nom }} - {{ vin.annee }} ({{ vin.type }}) : {{ vin.quantite }} bouteille{{ vin.quantite > 1 ? 's' : '' }}
+<div *ngFor="let vin of cave" class="vin">
+  {{ vin.nom }} - {{ vin.annee }} ({{ vin.type }}) : {{ vin.quantite }} bouteilles
+  <button (click)="remplirFormulaire(vin)">Modifier</button>
   <button (click)="supprimerVin(vin)">Supprimer</button>
 </div>
-</ul>
 
+
+<h2>Ajouter un vin</h2>
+
+
+<form (ngSubmit)="ajouterVin()">
+ <input type="text" placeholder="Nom" [(ngModel)]="nouveauVin.nom" name="nom"  required  #nomInput="ngModel"/>
+<div *ngIf="nomInput.invalid && nomInput.touched" class="erreur">
+  Le nom est obligatoire
+</div>
+
+  <input type="number" placeholder="Année" [(ngModel)]="nouveauVin.annee" name="annee" required />
+  
+  <select [(ngModel)]="nouveauVin.type" name="type" required>
+    <option value="Rouge">Rouge</option>
+    <option value="Blanc">Blanc</option>
+    <option value="Rosé">Rosé</option>
+  </select>
+  
+  <input type="number" placeholder="Quantité" [(ngModel)]="nouveauVin.quantite" name="quantite" required />
+  
+  <button type="submit" [disabled]="form.invalid">
+  {{ modeModification ? 'Modifier le vin' : 'Ajouter le vin' }}
+</button>
+
+</form>

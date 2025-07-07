@@ -27,6 +27,13 @@ export class CaveavinComponent implements OnInit {
   filtreType: string = '';
 
   cave: Vin[] = [];
+
+  nouveauVin: Vin = {
+    nom: '',
+    annee: new Date().getFullYear(),
+    type: 'Rouge',
+    quantite: 1
+  };
   
   form = this.fb.group({
     nom:      ['', Validators.required],
@@ -40,38 +47,74 @@ export class CaveavinComponent implements OnInit {
     private vinService: VinService
   ) {}
 
- 
+
+
 chargerCave(): void {
   this.vinService.getCave().subscribe(data => {
     this.cave = data;
   });
 }
+
+modeModification = false;
+nomOriginal: string | null = null;
+
+remplirFormulaire(vin: Vin) {
+  this.nouveauVin = { ...vin };
+  this.nomOriginal = vin.nom;
+  this.modeModification = true;
+}
   
-ngOnInit(): void {
-  this.chargerCave();
-}
+  ngOnInit(): void {
+    this.chargerCave();
+  }
 
 
-supprimerVin(vin: Vin): void {
-  this.vinService.supprimerVin(vin).subscribe(() => {
-    this.chargerCave(); // Rafraîchit la liste après suppression
-  });
-}
+  supprimerVin(vin: Vin): void {
+    this.vinService.supprimerVin(vin).subscribe(() => {
+      this.chargerCave(); // Rafraîchit la liste après suppression
+    });
+  }
 
+ajouterVin() {
+  if (!this.nouveauVin.nom?.trim()) {
+    alert('Le champ "Nom" est obligatoire.');
+    return;
+  }
 
-onSubmit(): void {
-  if (this.form.valid) {
-    const vin = this.form.value as Vin;
-    this.vinService.ajouterVin(vin).subscribe(() => {
+  if (this.modeModification && this.nomOriginal) {
+    this.vinService.modifierVin(this.nomOriginal, this.nouveauVin).subscribe(() => {
       this.chargerCave();
-      this.form.reset({
-        nom: '',
-        annee: new Date().getFullYear(),
-        type: 'Rouge',
-        quantite: 1
-      });
+      this.resetFormulaire();
+    });
+  } else {
+    this.vinService.ajouterVin(this.nouveauVin).subscribe(() => {
+      this.chargerCave();
+      this.resetFormulaire();
     });
   }
 }
 
+resetFormulaire() {
+  this.nouveauVin = { nom: '', annee: new Date().getFullYear(), type: 'Rouge', quantite: 1 };
+  this.nomOriginal = null;
+  this.modeModification = false;
 }
+
+
+
+  onSubmit(): void {
+    if (this.form.valid) {
+      const vin = this.form.value as Vin;
+      this.vinService.ajouterVin(vin).subscribe(() => {
+        this.chargerCave();
+        this.form.reset({
+          nom: '',
+          annee: new Date().getFullYear(),
+          type: 'Rouge',
+          quantite: 1
+        });
+      });
+    }
+  }
+}
+
