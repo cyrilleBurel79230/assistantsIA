@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { VinService }        from '../../services/vin.service';
 import { APP_CONFIG, AppConfig } from '../../app.config';
 import { inject }            from '@angular/core';
+import { Vin } from '../../models/vin.model';
 
 @Component({
   selector: 'app-caveavin',
@@ -18,7 +19,9 @@ import { inject }            from '@angular/core';
 export class CaveavinComponent implements OnInit {
   // injecter la config si besoin
   private config = inject<AppConfig>(APP_CONFIG);
-  cave: any[] = [];
+  
+  cave: Vin[] = [];
+  
   form = this.fb.group({
     nom:      ['', Validators.required],
     annee:    [new Date().getFullYear(), [Validators.required, Validators.min(1900)]],
@@ -31,19 +34,29 @@ export class CaveavinComponent implements OnInit {
     private vinService: VinService
   ) {}
 
-  ngOnInit(): void {
-    this.loadCave();
-  }
-
-  loadCave() {
-    this.vinService.getCave().subscribe(data => this.cave = data);
-  }
-
-  onSubmit() {
-    if (this.form.invalid) return;
-    this.vinService.ajouterVin(this.form.value).subscribe(() => {
-      this.form.reset({ annee: new Date().getFullYear(), quantite: 1 });
-      this.loadCave();
+ 
+chargerCave(): void {
+  this.vinService.getCave().subscribe(data => {
+    this.cave = data;
+  });
+}
+  
+ngOnInit(): void {
+  this.chargerCave();
+}
+onSubmit(): void {
+  if (this.form.valid) {
+    const vin = this.form.value as Vin;
+    this.vinService.ajouterVin(vin).subscribe(() => {
+      this.chargerCave();
+      this.form.reset({
+        nom: '',
+        annee: new Date().getFullYear(),
+        type: 'Rouge',
+        quantite: 1
+      });
     });
   }
+}
+
 }

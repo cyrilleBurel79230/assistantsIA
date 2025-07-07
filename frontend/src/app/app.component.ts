@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-
+import { CommonModule }      from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     RouterOutlet,       // pour <router-outlet>
-    HttpClientModule    // pour HttpClient dans tes services
+    HttpClientModule,    // pour HttpClient dans tes services
+    CommonModule
   ],
   template: `
     <div class="container">
