@@ -1,1 +1,39 @@
-<p>caveavin works!</p>
+<div class="container">
+  <h2>Ma Cave à Vin</h2>
+
+  <!-- Liste des vins -->
+  <ul>
+    <li *ngFor="let vin of cave" class="vin">
+      <strong>{{ vin.nom }}</strong>
+      ({{ vin.annee }} – {{ vin.type }}) :
+      {{ vin.quantite }} bouteille{{ vin.quantite > 1 ? 's' : '' }}
+    </li>
+  </ul>
+
+  <hr />
+
+  <!-- Formulaire d'ajout -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+      <label>Nom</label>
+      <input formControlName="nom" />
+    </div>
+    <div>
+      <label>Année</label>
+      <input type="number" formControlName="annee" />
+    </div>
+    <div>
+      <label>Type</label>
+      <select formControlName="type">
+        <option value="Rouge">Rouge</option>
+        <option value="Blanc">Blanc</option>
+        <option value="Rosé">Rosé</option>
+      </select>
+    </div>
+    <div>
+      <label>Quantité</label>
+      <input type="number" formControlName="quantite" />
+    </div>
+    <button type="submit" [disabled]="form.invalid">Ajouter</button>
+  </form>
+</div>

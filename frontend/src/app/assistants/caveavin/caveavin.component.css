@@ -1,0 +1,28 @@
+.container {
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.vin {
+  margin-bottom: 0.5rem;
+}
+
+form div {
+  margin: 0.5rem 0;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 0.25rem;
+  box-sizing: border-box;
+}
+
+button {
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+}

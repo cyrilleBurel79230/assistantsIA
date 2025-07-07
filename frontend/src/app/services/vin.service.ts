@@ -1,19 +1,23 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { ServerConfig } from '../app.config.server';
-import { Observable } from 'rxjs';
+// src/app/services/vin.service.ts
+import { Injectable, Inject } from '@angular/core';
+import { HttpClient }         from '@angular/common/http';
+import { APP_CONFIG, AppConfig } from '../app.config';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class VinService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    @Inject(APP_CONFIG) private config: AppConfig
+  ) {}
 
-  getCave(): Observable<any> {
-    return this.http.get(`${ServerConfig.baseUrl}${ServerConfig.endpoints.getCave}`);
+  getCave() {
+    return this.http.get(`${this.config.apiBaseUrl}/cave`);
   }
 
-  ajouterVin(vin: any): Observable<any> {
-    return this.http.post(`${ServerConfig.baseUrl}${ServerConfig.endpoints.addVin}`, vin);
+  ajouterVin(vin: any) {
+    return this.http.post(
+      `${this.config.apiBaseUrl}/ajouter`,
+      vin
+    );
   }
 }
