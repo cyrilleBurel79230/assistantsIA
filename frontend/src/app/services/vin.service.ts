@@ -21,4 +21,7 @@ export class VinService {
   ajouterVin(vin: Vin): Observable<any> {
     return this.http.post(`${this.base}${ServerConfigValue.endpoints.addVin}`, vin);
   }
+  supprimerVin(vin: Vin): Observable<any> {
+    return this.http.delete(`${this.base}${ServerConfigValue.endpoints.deleteVin}/${vin.nom}`);
+  }
 }

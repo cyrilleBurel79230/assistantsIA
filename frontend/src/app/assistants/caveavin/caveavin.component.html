@@ -1,10 +1,19 @@
 <h2>Ma cave à vin</h2>
 
 <div *ngIf="cave.length === 0">Aucune bouteille enregistrée.</div>
+<label>Filtrer par type :</label>
+
+<select [(ngModel)]="filtreType">
+  <option value="">Tous</option>
+  <option value="Rouge">Rouge</option>
+  <option value="Blanc">Blanc</option>
+  <option value="Rosé">Rosé</option>
+</select>
 
 <ul *ngIf="cave.length > 0" class="liste-vins">
-  <li *ngFor="let vin of cave">
-    <strong>{{ vin.nom }}</strong> ({{ vin.annee }}) - 
-    {{ vin.type }} – {{ vin.quantite }} bouteille{{ vin.quantite > 1 ? 's' : '' }}
-  </li>
+  <div *ngFor="let vin of cave | vinType: filtreType">
+  {{ vin.nom }} - {{ vin.annee }} ({{ vin.type }}) : {{ vin.quantite }} bouteille{{ vin.quantite > 1 ? 's' : '' }}
+  <button (click)="supprimerVin(vin)">Supprimer</button>
+</div>
 </ul>
+

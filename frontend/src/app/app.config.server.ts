@@ -4,6 +4,7 @@
 export interface ServerEndpoints {
   getCave: string;
   addVin: string;
+  deleteVin: string;
   // ajoute d’autres endpoints ici si besoin
 }
 
@@ -17,6 +18,7 @@ export const ServerConfigValue: ServerConfig = {
   baseUrl: 'http://localhost:8000',
   endpoints: {
     getCave: '/cave',
-    addVin: '/ajouter'
+    addVin: '/cave/ajouter',
+    deleteVin: '/cave/delete',
   }
 };

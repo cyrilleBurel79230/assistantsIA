@@ -11,4 +11,6 @@ export const appRoutes: Routes = [
   // { path: 'jardin',   component: JardinComponent },
   { path: '', redirectTo: 'caveavin', pathMatch: 'full' },
   { path: '**', redirectTo: 'caveavin' }
+   
+  
 ];
